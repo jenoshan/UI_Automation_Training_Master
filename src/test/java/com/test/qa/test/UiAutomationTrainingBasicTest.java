@@ -75,6 +75,23 @@ public class UiAutomationTrainingBasicTest extends TestBase {
         //Todo - Verify Check Box 2 is Unchecked
         //Todo - Navigate Back to Home Page
         //Todo - Verify HomePage is displayed
+		softAssert = new SoftAssert();
+		softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+		HomePage.clickLink(Constants.CHECK_BOX_LINK);
+		softAssert.assertTrue(CheckBoxPage.isCheckBoxPageDisplayed(), "Check Box Page is not getting displayed");
+		softAssert.assertTrue(CheckBoxPage.isCheckBox1Displayed(), "CheckBox1 is not Displayed");
+		softAssert.assertTrue(CheckBoxPage.isCheckBox2Displayed(), "CheckBox2 is not Displayed");
+		CheckBoxPage.checkCheckBox1();
+		softAssert.assertTrue(CheckBoxPage.isCheckBox1Checked(), "CheckBox1 is not Checked");
+		CheckBoxPage.unCheckCheckBox1();
+		softAssert.assertFalse(CheckBoxPage.isCheckBox1Checked(), "CheckBox1 is Checked");
+		CheckBoxPage.checkCheckBox2();
+		softAssert.assertTrue(CheckBoxPage.isCheckBox2Checked(), "CheckBox2 is not Checked");
+		CheckBoxPage.unCheckCheckBox2();
+		softAssert.assertFalse(CheckBoxPage.isCheckBox2Checked(), "CheckBox2 is Checked");
+		CheckBoxPage.navigateBack();
+		softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+		softAssert.assertAll();
 	}
 
 	/**
@@ -90,6 +107,15 @@ public class UiAutomationTrainingBasicTest extends TestBase {
         //Todo - Verify Drop Down Option 1 selected
         //Todo - Select Drop Down Option 2
         //Todo - Verify Drop Down Option 2 selected
+		softAssert = new SoftAssert();
+		softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+		HomePage.clickLink(Constants.DROP_DOWN_LINK);
+		softAssert.assertTrue(DropDownPage.isDropDownDisplayed(), "Drop Down Page is not getting displayed");
+		DropDownPage.setDropDownOption(Constants.OPTION_1);
+		softAssert.assertEquals(DropDownPage.getSelectedOption(),Constants.OPTION_1,"Drop down value is incorrect");
+		DropDownPage.setDropDownOption(Constants.OPTION_2);
+		softAssert.assertEquals(DropDownPage.getSelectedOption(),Constants.OPTION_2,"Drop down value is incorrect");
+		softAssert.assertAll();
 	}
 
 	/**
@@ -102,6 +128,13 @@ public class UiAutomationTrainingBasicTest extends TestBase {
         //Todo - Set Sample Mail
         //Todo - Click Submit
         //Todo - Verify Forgot Password Message
+		softAssert = new SoftAssert();
+		softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+		HomePage.clickLink(Constants.FORGOT_PASSWORD_LINK);
+		ForgotPasswordPage.setEmail(Constants.SAMPLE_MAIL);
+		ForgotPasswordPage.clickSubmit();
+		softAssert.assertEquals(ForgotPasswordPage.getResult(),Constants.EMAIL_RESULT,"Email submit result is incorrect");
+		softAssert.assertAll();
 	}
 
 	/**
@@ -120,6 +153,20 @@ public class UiAutomationTrainingBasicTest extends TestBase {
         //Todo - Verify Login Page Displayed
         //Todo - Verify Logout Alert Displayed
         //Todo - Verify Logout  Alert Message
+		softAssert = new SoftAssert();
+		softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+		HomePage.clickLink(Constants.LOGIN_LINK);
+		LoginPage.setUsername(Constants.LOGIN_USER_NAME);
+		LoginPage.setPassword(Constants.LOGIN_PASSWORD);
+		LoginPage.clickSubmit();
+		softAssert.assertTrue(LoginSecurePage.isLoginSecurePageDisplayed(),"Login Secure Page is not displayed");
+		softAssert.assertTrue(LoginSecurePage.isLoginAlertDisplayed(),"Login Alert is not displayed");
+		softAssert.assertTrue(LoginSecurePage.getLoginAlertMessage().contains(Constants.LOGIN_SUCCESS_MSG),"Login Alert message is incorrect");
+		LoginSecurePage.clickLogout();
+		softAssert.assertTrue(LoginPage.isLoginPageDisplayed(),"Login Page is not displayed");
+		softAssert.assertTrue(LoginPage.isLoginAlertDisplayed(),"Logout Alert not displayed");
+		softAssert.assertTrue(LoginPage.getLoginAlertMessage().contains(Constants.LOGOUT_SUCCESS_MSG),"Logout message is incorrect");
+		softAssert.assertAll();
 	}
 
 	/**
@@ -134,5 +181,15 @@ public class UiAutomationTrainingBasicTest extends TestBase {
         //Todo - Click Submit
         //Todo - Verify Login Alert Displayed
         //Todo - Verify Login  Alert Message
+		softAssert = new SoftAssert();
+		softAssert.assertTrue(HomePage.isHomePageDisplayed(), "Home Page is not Displayed");
+		HomePage.clickLink(Constants.LOGIN_LINK);
+		LoginPage.setUsername(username);
+		LoginPage.setPassword(password);
+		LoginPage.clickSubmit();
+		softAssert.assertTrue(LoginPage.isLoginAlertDisplayed(),"Login Alert not displayed");
+		softAssert.assertTrue(LoginPage.getLoginAlertMessage().contains(Constants.LOGIN_INVALID_MSG),"Login message is incorrect");
+		softAssert.assertAll();
+
 	}
 }
